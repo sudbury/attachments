@@ -1335,11 +1335,11 @@ if ( ! class_exists( 'Attachments' ) ) :
                             <div class="edit-attachment-asset"><a target="_blank" href="<?php echo admin_url('post.php?post=' . ( isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ) . '&amp;action=edit&amp;referred=true&amp;referrer_post_type=post'); ?>"><?php _e( 'Change', 'attachments' ); ?></a></div>
                             <div class="perm-delete-attachment"><a style="color:#a00;" href="#"><?php _e( 'Delete', 'attachments' ); ?></a></div>
                             <div class="delete-attachment"><a href="#"><?php _e( 'Remove', 'attachments' ); ?></a></div>
-                            <div class="attachment-type">
-                              <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="test-1" /> Test 1<br>
-                              <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="test-2" /> Test 2<br>
-                              <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="test-3" /> Test 3<br>
-                            </div>
+                        </div>
+                        <div class="attachment-type">
+                          <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="test-1" /> Test 1<br>
+                          <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="test-2" /> Test 2<br>
+                          <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="test-3" /> Test 3<br>
                         </div>
                     </div>
 
