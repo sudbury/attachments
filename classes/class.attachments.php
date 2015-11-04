@@ -1332,21 +1332,18 @@ if ( ! class_exists( 'Attachments' ) ) :
                             <?php if( ( isset( $attachment->id ) && isset( $attachment->width ) ) || ! isset( $attachment->id ) ) : ?>
                                 <div class="dimensions"><?php echo isset( $attachment->width ) ? esc_html( $attachment->width ) : '{{ attachments.width }}' ; ?> &times; <?php echo isset( $attachment->height ) ? esc_html( $attachment->height ) : '{{ attachments.height }}' ; ?></div>
                             <?php endif; ?>
-                            <div class="edit-attachment-asset"><a href="#"><?php _e( 'Change', 'attachments' ); ?></a></div>
+                            <div class="edit-attachment-asset"><a target="_blank" href="<?php echo admin_url('post.php?post=' . ( isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ) . '&amp;action=edit&amp;referred=true&amp;referrer_post_type=post'); ?>"><?php _e( 'Change', 'attachments' ); ?></a></div>
+                            <div class="perm-delete-attachment"><a style="color:#a00;" href="#"><?php _e( 'Delete', 'attachments' ); ?></a></div>
                             <div class="delete-attachment"><a href="#"><?php _e( 'Remove', 'attachments' ); ?></a></div>
-                            <div class="attachments-attachment-fields-toggle"><a href="#"><?php _e( 'Toggle Fields', 'attachments' ); ?></a></div>
+                            <div class="attachment-type">
+                              <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="test-1" /> Test 1<br>
+                              <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="test-2" /> Test 2<br>
+                              <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="test-3" /> Test 3<br>
+                            </div>
                         </div>
                     </div>
 
                     <div class="attachments-handle"><img src="<?php echo trailingslashit( $this->url ) . 'images/handle.gif'; ?>" alt="Handle" width="20" height="20" /></div>
-
-                    <div class="attachments-fields">
-                        <?php
-                            foreach( $this->instances[$instance]['fields'] as $field ) {
-                                $field_ref = $this->create_attachment_field( $instance, $field, $attachment );
-                            }
-                        ?>
-                    </div>
 
                 </div>
             <?php
