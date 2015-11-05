@@ -1290,6 +1290,11 @@ if ( ! class_exists( 'Attachments' ) ) :
          * @since 3.0
          */
         function create_attachment( $instance, $attachment = null ) {
+            $attachment_types = get_site_option('sudbury_attachment_types', array());
+
+            $type = isset( $attachment->id ) ? get_post_meta( $attachment->id, 'sudbury_meeting_attachment_type', true ) : false;
+
+            $attachment_types = isset( $attachment_types[$this->get_post_type()] ) ? $attachment_types[$this->get_post_type()] : array();
             ?>
                 <div class="attachments-attachment attachments-attachment-<?php echo esc_attr( $instance ); ?>">
                     <?php $array_flag = ( isset( $attachment->uid ) ) ? $attachment->uid : '{{ attachments.attachment_uid }}'; ?>
@@ -1332,14 +1337,14 @@ if ( ! class_exists( 'Attachments' ) ) :
                             <?php if( ( isset( $attachment->id ) && isset( $attachment->width ) ) || ! isset( $attachment->id ) ) : ?>
                                 <div class="dimensions"><?php echo isset( $attachment->width ) ? esc_html( $attachment->width ) : '{{ attachments.width }}' ; ?> &times; <?php echo isset( $attachment->height ) ? esc_html( $attachment->height ) : '{{ attachments.height }}' ; ?></div>
                             <?php endif; ?>
-                            <div class="edit-attachment-asset"><a target="_blank" href="<?php echo admin_url('post.php?post=' . ( isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ) . '&amp;action=edit&amp;referred=true&amp;referrer_post_type=post'); ?>"><?php _e( 'Change', 'attachments' ); ?></a></div>
+                            <div class="edit-attachment-asset"><a target="_blank" href="<?php echo admin_url('post.php?post=' . ( isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ) . '&amp;action=edit&amp;referred=true&amp;referrer_post_type=<?php echo esc_attr($this->get_post_type()); ?>'); ?>"><?php _e( 'Change', 'attachments' ); ?></a></div>
                             <div class="perm-delete-attachment"><a style="color:#a00;" href="#"><?php _e( 'Delete', 'attachments' ); ?></a></div>
                             <div class="delete-attachment"><a href="#"><?php _e( 'Remove', 'attachments' ); ?></a></div>
                         </div>
                         <div class="attachment-type">
-                          <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="test-1" /> Test 1<br>
-                          <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="test-2" /> Test 2<br>
-                          <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="test-3" /> Test 3<br>
+                          <?php foreach ( $attachment_types as $slug => $label ) { ?>
+                            <input type="radio" name="attachment_type[<?php echo isset( $attachment->id ) ? $attachment->id : '{{ attachments.id }}' ?>]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( $type, $slug ); ?> /><?php echo esc_html( $label ); ?><br>
+                          <?php } ?>
                         </div>
                     </div>
 
